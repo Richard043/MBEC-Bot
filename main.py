@@ -40,7 +40,7 @@ async def help(ctx):
   em.add_field(name="Texts", value="advice, insult")
   # em.add_field(name="Music", value="Join, DC, play, pause, resume")
   em.add_field(name="Counts", value="timer, roll, calc")
-  em.add_field(name="Specials", value="dex, movesets, stats, TS, MT, RAG")
+  em.add_field(name="Specials", value="dex, movesets, stats, TS, MT, RAG, RP")
   em.add_field(name="Infos", value="avatar, ping, help")
   em.add_field(name="Developments", value="BI")
 
@@ -818,6 +818,19 @@ async def MT(ctx):
                      color=ctx.author.color)
 
   em.add_field(name="**Syntax**", value="M!mt <pokemon-type>")
+
+  await ctx.send(embed=em)
+
+
+
+@help.command()
+async def RP(ctx):
+
+  em = discord.Embed(title="Random Pokemon",
+                     description="Guess the name of the given pokemon!",
+                     color=ctx.author.color)
+
+  em.add_field(name="**Syntax**", value="M!mt <pokemon-name>")
 
   await ctx.send(embed=em)
 
@@ -2100,9 +2113,9 @@ async def rps(ctx):
       )
 
 
-@client.command()
+@client.command(aliases=['RP', 'ranpoke'])
 async def rp(ctx):
-  ranpoke = random.randint(1, 905)
+  ranpoke = random.randint(1, 1025)
   url = "https://pokeapi.co/api/v2/pokemon/"
 
   try:
@@ -2124,7 +2137,7 @@ async def rp(ctx):
 
     user_ans = (await client.wait_for("message", check=check)).content
 
-    if user_ans == napo:
+    if user_ans.lower() == napo:
       await ctx.send("You are correct! :)")
     else:
       await ctx.send(f"You are incorrect :v\nThe answer is {napo}")
